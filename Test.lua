@@ -95,10 +95,14 @@ Tab:Button("Login To Seringe!", function()
     
         return false
     end
-    
-    StarterGui:SetCore("SendNotification", {
-        Title = LuaName,
-        Text = "Welcome To Seringe " .. Username .. "!",
-        Duration = 5
-    })
+
+    if data.info.username == game.Players.LocalPlayer.Name then
+        StarterGui:SetCore("SendNotification", {
+            Title = LuaName,
+            Text = "Welcome To Seringe " .. Username .. "!",
+            Duration = 5
+        })
+    else
+        game.Players.LocalPlayer:Kick("Please login on the roblox account " .. data.info.username .. "!")
+    end
 end)
