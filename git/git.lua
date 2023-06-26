@@ -32,6 +32,7 @@ local function spider(struct)
 				if true then
 					prev = prev .. '/' .. vv:gsub('/tree/', '')
 					makefolder(prev:gsub('/tree/', '/'))
+                    return vv, prev
 				end
 			end
 		end
@@ -43,6 +44,7 @@ local function spider(struct)
 			e = rawst[1] .. '' .. rawst[2]
 			a = game:HttpGet('https://raw.githubusercontent.com' .. e)
 			writefile(rawst[1]:gsub('', '') .. '' .. rawst[2], a)
+            return rawst[1]:gsub('', '') .. '' .. rawst[2]
 		end
 		wait()
 	end
