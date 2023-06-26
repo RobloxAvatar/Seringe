@@ -17,18 +17,11 @@ local treestrct = {}
 
 for i, v in pairs(struct) do
     a = v:split('/')
-
     if a[4] == 'blob' then
-			print(v .. ' blob found')
 			local rawst = v:split('blob/')
-			if not isfolder(rawst[1]:gsub('', '')) then
-				makefolder(rawst[1]:gsub('', ''))
-			end
 			e = rawst[1] .. '' .. rawst[2]
-			print('https://raw.githubusercontent.com' .. e)
 			a = game:HttpGet('https://raw.githubusercontent.com' .. e)
-			warn(rawst[1]:gsub('', '') .. '' .. rawst[2])
-			writefile(rawst[1]:gsub('', '') .. '' .. rawst[2], a)
+			return rawst[1]:gsub('', '') .. '' .. rawst[2]
 		end
 		wait()
 	end
