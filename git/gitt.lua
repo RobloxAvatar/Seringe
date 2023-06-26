@@ -28,7 +28,6 @@ local function spider(struct)
 				wait()
 			end
 			prev = ''
-            vv = ''
 			for i, vv in pairs(a) do
 				if true then
 					prev = prev .. '/' .. vv:gsub('/tree/', '')
@@ -41,7 +40,6 @@ local function spider(struct)
 			e = rawst[1] .. '' .. rawst[2]
 			a = game:HttpGet('https://raw.githubusercontent.com' .. e)
 			return rawst[1]:gsub('', '') .. '' .. rawst[2]
-			writefile(rawst[1]:gsub('', '') .. '' .. rawst[2], a)
 		end
 		wait()
 	end
