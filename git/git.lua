@@ -14,11 +14,13 @@ for i = 2, #a.Body:split([[<div role="rowheader" class="flex-auto min-width-0 co
 end
 local function spider(struct)
 	local st = os.clock()
+	warn('------------------')
 	local treestrct = {}
 	for i, v in pairs(struct) do
 		a = v:split('/')
 		makefolder(a[2] .. '/' .. a[3] .. '/main')
 		if a[4] == 'tree' then
+			print(v .. ' tree found')
 			local b = syn.request({
 				Url = 'https://github.com' .. v,
 				Method = 'GET'
@@ -32,15 +34,22 @@ local function spider(struct)
 				warn(vv)
 				if true then
 					prev = prev .. '/' .. vv:gsub('/tree/', '')
-					return vv, prev
+					warn(vv, prev)
+					makefolder(prev:gsub('/tree/', '/'))
 				end
 			end
 		end
 		if a[4] == 'blob' then
+			print(v .. ' blob found')
 			local rawst = v:split('blob/')
+			if not isfolder(rawst[1]:gsub('', '')) then
+				makefolder(rawst[1]:gsub('', ''))
+			end
 			e = rawst[1] .. '' .. rawst[2]
+			print('https://raw.githubusercontent.com' .. e)
 			a = game:HttpGet('https://raw.githubusercontent.com' .. e)
-			return rawst[1]:gsub('', '') .. '' .. rawst[2]
+			warn(rawst[1]:gsub('', '') .. '' .. rawst[2])
+			writefile(rawst[1]:gsub('', '') .. '' .. rawst[2], a)
 		end
 		wait()
 	end
@@ -51,6 +60,9 @@ local function spider(struct)
 		spider(treestrct)
 	end
 end
+
+print(#struct)
 spider(struct)
 end
 return git
+--// usage : git.clone('https://github.com/tonumber/roblox-scripts') - outputs to tonumber/roblox-scripts in workspace folder
